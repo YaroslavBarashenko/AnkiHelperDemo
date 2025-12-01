@@ -1,4 +1,4 @@
-package org.demotdd.org.demotdd.other
+package org.demotdd.util
 
 enum class OS {
     WINDOWS,

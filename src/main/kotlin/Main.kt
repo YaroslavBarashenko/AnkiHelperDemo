@@ -1,6 +1,6 @@
 package org.demotdd
 
-import org.demotdd.org.demotdd.other.defineOs
+import org.demotdd.util.defineOs
 import org.demotdd.validations.validateInputPath
 import org.demotdd.validations.validateOutputPath
 import java.nio.file.InvalidPathException

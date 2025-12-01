@@ -1,6 +1,6 @@
 package org.demotdd.validations
 
-import org.demotdd.org.demotdd.other.OS
+import org.demotdd.util.OS
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.exists

@@ -1,8 +1,8 @@
 package validations
 
 import io.kotest.matchers.shouldBe
-import org.demotdd.org.demotdd.other.OS.LINUX
-import org.demotdd.org.demotdd.other.OS.WINDOWS
+import org.demotdd.util.OS.LINUX
+import org.demotdd.util.OS.WINDOWS
 import org.demotdd.validations.InvalidPathException
 import org.demotdd.validations.validateInputPath
 import org.demotdd.validations.validateOutputPath
@@ -15,12 +15,6 @@ import org.junit.jupiter.params.provider.ValueSource
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.createFile
-
-
-/*todo показати повідомлення про помилку,
-   він не може бути розпарсений.
-   Наприклад: в кінці файлу немає знака пунктуації
-*/
 
 class PathValidatorKtTest {
     @Test
