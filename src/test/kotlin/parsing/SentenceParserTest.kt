@@ -32,7 +32,7 @@ class SentenceParserTest {
     }
 
     @Test
-    fun `splitted sentence joined to complete considering punctuation signs`() {
+    fun `split sentences joined to complete considering punctuation marks`() {
         val inputText = "Normally the bridge is closed to the public, but there will be a special tour this\n" +
                 "afternoon."
 
