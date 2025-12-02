@@ -2,17 +2,13 @@ package parsing
 
 import io.kotest.matchers.shouldBe
 import org.demotdd.parsing.getTranslationList
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
 
 /*
 todo
- розпарсити вхідний текст на речення для перекладу,
-  зайві пробіли, табуляції, нові рядки,
- дубльовані рядки. +
-Приклад вхідного тексту: у файлі /src/test/resources/input.txt
-Можуть бути кілька речень в одиниці перекладу, може бути кілька великих літер в одній одиниці, може бути зірочка а може не бути.
-Ознака закінчення одиниці тексту - наявність знака пунктуації: крапка, знак питання або знак оклику. Може також супроводжуватися лапками.
-Якщо закінчується лапками то і починається лапками, у цьому випадку зовнішні лапки не повинні відправлятись на переклад і потрапляти у вихідний файл.
+видалити послідовні пробіли та зайві лапки
 */
 class SentenceParserTest {
 
@@ -29,5 +25,28 @@ class SentenceParserTest {
 
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = [" Hello, world! ", "    Hello, world!  ", "\nHello, world!\n", "* Hello, world!*"])
+    fun `redundant characters are removed from input sentences`(inputText: String) {
+        getTranslationList(inputText) shouldBe listOf("Hello, world!")
+    }
 
+    @Test
+    fun `splitted sentence joined to complete considering punctuation signs`() {
+        val inputText = "Normally the bridge is closed to the public, but there will be a special tour this\n" +
+                "afternoon."
+
+        getTranslationList(inputText) shouldBe listOf("Normally the bridge is closed to the public, but there will be a special tour this afternoon.")
+    }
+
+    @Test
+    fun `real life input file successfully parsed`() {
+        val inputFileContent =
+            this::class.java.getResource("/input.txt")?.readText() ?: throw Exception("Input file hasn't been read.")
+
+        val result = getTranslationList(inputFileContent)
+        result.size shouldBe 11
+        result.last() shouldBe "Normally the bridge is closed to the public, but there will be a special tour this afternoon."
+        result.first() shouldBe "Wynona has suffered from cancer for years, so she decided to add a “do not resuscitate” order to her medical records."
+    }
 }
