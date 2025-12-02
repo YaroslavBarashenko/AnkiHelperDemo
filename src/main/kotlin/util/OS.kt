@@ -7,9 +7,12 @@ enum class OS {
     OTHER
 }
 
-fun defineOs(osName: String): OS = when {
-    osName.contains("win") -> OS.WINDOWS
-    osName.contains("mac") -> OS.MAC
-    osName.contains("nix") -> OS.LINUX
-    else -> OS.OTHER
+fun defineOs(osName: String): OS {
+    val os = osName.lowercase()
+    return when {
+        os.contains("win") -> OS.WINDOWS
+        os.contains("mac") -> OS.MAC
+        os.contains("nix") -> OS.LINUX
+        else -> OS.OTHER
+    }
 }
