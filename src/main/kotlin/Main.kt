@@ -1,7 +1,8 @@
 package org.demotdd
 
 import config.ConfigReader
-import org.demotdd.io.FileProcessor
+import org.demotdd.io.readFromFile
+import org.demotdd.io.writeToFile
 import org.demotdd.mapping.joinLines
 import org.demotdd.parsing.getTranslationList
 import org.demotdd.translation.Translator
@@ -21,9 +22,7 @@ fun main(args: Array<String>) {
         validateInputPath(inputPath)
         validateOutputPath(outputPath, defineOs(System.getProperty("os.name")))
 
-        val fileProcessor = FileProcessor()
-
-        val inputText = fileProcessor.readFromFile(inputPath)
+        val inputText = readFromFile(inputPath)
 
         val originalLines = getTranslationList(inputText)
 
@@ -34,7 +33,7 @@ fun main(args: Array<String>) {
 
         val outputText = joinLines(translatedLines, originalLines)
 
-        fileProcessor.writeToFile(outputPath, outputText)
+        writeToFile(outputPath, outputText)
     } catch (e: InvalidPathException) {
         println("Invalid path provided.")
     } catch (e: Throwable) {

@@ -2,8 +2,6 @@ package org.demotdd.io
 
 import java.nio.file.Path
 
-// Використовуйте цей клас для роботи з файлами
-class FileProcessor {
     fun readLinesFromFile(inputPath: Path): List<String> = inputPath.toFile().readLines()
 
     fun readFromFile(inputPath: Path): String = inputPath.toFile().readText()
@@ -11,4 +9,3 @@ class FileProcessor {
     fun writeToFile(outputPath: Path, text: String) = outputPath.toFile().writeText(text)
 
     fun appendFile(outputPath: Path, text: String) = outputPath.toFile().appendText(text)
-}

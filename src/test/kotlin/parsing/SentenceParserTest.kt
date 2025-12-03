@@ -6,10 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
 
-/*
-todo
-видалити послідовні пробіли та зайві лапки
-*/
 class SentenceParserTest {
 
     @Test
@@ -26,9 +22,31 @@ class SentenceParserTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = [" Hello, world! ", "    Hello, world!  ", "\nHello, world!\n", "* Hello, world!*"])
+    @ValueSource(strings = [" Hello, world! ", "    Hello, world!  ", "\nHello, world!\n", "* Hello, world!*", "Hello,   world!"])
     fun `redundant characters are removed from input sentences`(inputText: String) {
         getTranslationList(inputText) shouldBe listOf("Hello, world!")
+    }
+
+    @Test
+    fun `completed quotation marks persists in text`() {
+        val input =
+            "Wynona has suffered from cancer for years, so she decided to add a “do not resuscitate” order to her medical records."
+
+        val result = getTranslationList(input)
+
+        result.size shouldBe 1
+        result.first() shouldBe input
+    }
+
+    @Test
+    fun `partial quotation marks are removed from text`() {
+        val input =
+            """Hello, “world!"""
+
+        val result = getTranslationList(input)
+
+        result.size shouldBe 1
+        result.first() shouldBe "Hello, world!"
     }
 
     @Test
