@@ -18,4 +18,11 @@ class Translator(apiKey: String) {
 
     val usedCharacters get() = externalTranslator.usage.character?.count
 
+    fun getStatistics(): Triple<Long?, Long?, Long?> {
+        val charactersLimit = charactersLimit
+        val usedCharacters = usedCharacters
+        val charactersReminder = charactersLimit?.minus(usedCharacters ?: 0)
+
+        return Triple(charactersLimit, usedCharacters, charactersReminder)
+    }
 }

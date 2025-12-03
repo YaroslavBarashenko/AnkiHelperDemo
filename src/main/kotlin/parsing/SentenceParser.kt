@@ -1,10 +1,5 @@
 package org.demotdd.parsing
 
-/*todo показати повідомлення про помилку,
-   якщо файл не може бути розпарсений.
-   Наприклад: в кінці файлу немає знака пунктуації
-*/
-
 val marks = setOf('?', '!', '.')
 private fun Char.isPunctuationMark() = this in marks
 
