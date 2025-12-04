@@ -1,7 +1,7 @@
 package parsing
 
 import io.kotest.matchers.shouldBe
-import org.demotdd.parsing.getTranslationList
+import org.demotdd.parsing.prepareLinesForTranslation
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
@@ -15,7 +15,7 @@ class SentenceParserTest {
         """.trimMargin()
 
 
-        val result = getTranslationList(inputText)
+        val result = prepareLinesForTranslation(inputText)
 
         result shouldBe listOf("Hello, world!")
 
@@ -24,7 +24,7 @@ class SentenceParserTest {
     @ParameterizedTest
     @ValueSource(strings = [" Hello, world! ", "    Hello, world!  ", "\nHello, world!\n", "* Hello, world!*", "Hello,   world!"])
     fun `redundant characters are removed from input sentences`(inputText: String) {
-        getTranslationList(inputText) shouldBe listOf("Hello, world!")
+        prepareLinesForTranslation(inputText) shouldBe listOf("Hello, world!")
     }
 
     @Test
@@ -32,7 +32,7 @@ class SentenceParserTest {
         val input =
             "Wynona has suffered from cancer for years, so she decided to add a “do not resuscitate” order to her medical records."
 
-        val result = getTranslationList(input)
+        val result = prepareLinesForTranslation(input)
 
         result.size shouldBe 1
         result.first() shouldBe input
@@ -43,7 +43,7 @@ class SentenceParserTest {
         val input =
             """Hello, “world!"""
 
-        val result = getTranslationList(input)
+        val result = prepareLinesForTranslation(input)
 
         result.size shouldBe 1
         result.first() shouldBe "Hello, world!"
@@ -54,7 +54,7 @@ class SentenceParserTest {
         val inputText = "Normally the bridge is closed to the public, but there will be a special tour this\n" +
                 "afternoon."
 
-        getTranslationList(inputText) shouldBe listOf("Normally the bridge is closed to the public, but there will be a special tour this afternoon.")
+        prepareLinesForTranslation(inputText) shouldBe listOf("Normally the bridge is closed to the public, but there will be a special tour this afternoon.")
     }
 
     @Test
@@ -62,7 +62,7 @@ class SentenceParserTest {
         val inputFileContent =
             this::class.java.getResource("/input.txt")?.readText() ?: throw Exception("Input file hasn't been read.")
 
-        val result = getTranslationList(inputFileContent)
+        val result = prepareLinesForTranslation(inputFileContent)
         result.size shouldBe 11
         result.last() shouldBe "Normally the bridge is closed to the public, but there will be a special tour this afternoon."
         result.first() shouldBe "Wynona has suffered from cancer for years, so she decided to add a “do not resuscitate” order to her medical records."

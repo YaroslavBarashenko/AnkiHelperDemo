@@ -3,12 +3,14 @@ package org.demotdd
 import config.ConfigReader
 import org.demotdd.OutputTreatment.APPEND
 import org.demotdd.io.appendFile
+import org.demotdd.io.cleanFile
 import org.demotdd.io.readFromFile
 import org.demotdd.io.writeToConsole
 import org.demotdd.io.writeToFile
 import org.demotdd.mapping.joinLines
-import org.demotdd.parsing.getTranslationList
+import org.demotdd.parsing.prepareLinesForTranslation
 import org.demotdd.translation.Translator
+import org.demotdd.util.countSymbols
 import org.demotdd.util.defineOs
 import org.demotdd.validations.validateInputPath
 import org.demotdd.validations.validateOutputPath
@@ -37,7 +39,8 @@ fun main(args: Array<String>) {
         writeToConsole("Extracted API key")
 
         val inputText = readFromFile(inputPath)
-        val originalLines = getTranslationList(inputText)
+        val originalLines = prepareLinesForTranslation(inputText)
+        val symbolsCount = countSymbols(originalLines)
         writeToConsole("Parsed input file at $inputPath")
 
         val translator = Translator(apiKey)
@@ -48,7 +51,7 @@ fun main(args: Array<String>) {
                     "used: $usedCharacters, reminder $charactersReminder"
         )
 
-        writeToConsole("Sending parsed lines to translation service... Total count: ${originalLines.sumOf { it.count() }}")
+        writeToConsole("Sending parsed lines to translation service... Total count: $symbolsCount")
         val translatedLines = translator.translateLines(originalLines, "en", "uk")
         writeToConsole("Translation finished successfully. ")
         val outputText = joinLines(translatedLines, originalLines)
@@ -56,15 +59,18 @@ fun main(args: Array<String>) {
         if (outputPath.exists() && APPEND.flag == outputTreatment) {
             appendFile(outputPath, outputText)
             writeToConsole("Translation was successfully appended in the output file.")
+            cleanFile(inputPath)
             return
         }
+
         writeToFile(outputPath, outputText)
         writeToConsole("Translation was successfully written in the output file.")
-
+        cleanFile(inputPath)
     } catch (e: InvalidPathException) {
-        println("Invalid path provided.")
+        println("Invalid path provided: ${e.message}")
     } catch (e: Throwable) {
         println("An error occurred: ${e.message}")
     }
 }
+
 

@@ -16,3 +16,6 @@ fun defineOs(osName: String): OS {
         else -> OS.OTHER
     }
 }
+
+fun countSymbols(lines: List<String>): Int = lines.sumOf { it.count() }
+

@@ -5,7 +5,7 @@ private fun Char.isPunctuationMark() = this in marks
 
 class IllegalInputFileException(message: String) : Exception(message)
 
-fun getTranslationList(inputText: String): List<String> {
+fun prepareLinesForTranslation(inputText: String): List<String> {
     val input = inputText.replace(Regex("[*\\n\\r]+"), " ").replace(Regex("\\s{2,}"), " ").trim()
     val lines = mutableListOf<String>()
     var endIndex = input.lastIndex
@@ -45,6 +45,8 @@ private fun cleanPartialQuotationMarks(inputText: String): String {
 
     return inputText
 }
+
+
 
 
 
