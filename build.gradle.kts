@@ -1,5 +1,20 @@
 plugins {
     kotlin("jvm") version "1.9.23"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    application
+}
+
+application {
+    mainClass.set("org.demotdd.MainKt")
+}
+
+tasks.shadowJar {
+    archiveBaseName.set("anki-helper")
+    archiveClassifier.set("")
+    archiveVersion.set("1.0.0")
+    manifest {
+        attributes["Main-Class"] = "org.demotdd.MainKt"
+    }
 }
 
 group = "org.demotdd"
