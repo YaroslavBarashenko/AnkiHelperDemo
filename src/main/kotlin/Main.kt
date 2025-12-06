@@ -17,6 +17,7 @@ import org.demotdd.validations.validateOutputPath
 import java.nio.file.InvalidPathException
 import java.nio.file.Paths
 import kotlin.io.path.exists
+import kotlin.io.path.fileSize
 
 enum class OutputTreatment(val flag: String) {
     APPEND("a"),
@@ -56,7 +57,7 @@ fun main(args: Array<String>) {
         writeToConsole("Translation finished successfully. ")
         val outputText = joinLines(translatedLines, originalLines)
 
-        if (outputPath.exists() && APPEND.flag == outputTreatment) {
+        if (outputPath.exists() && outputPath.fileSize() > 0 && APPEND.flag == outputTreatment) {
             appendFile(outputPath, outputText)
             writeToConsole("Translation was successfully appended in the output file.")
             cleanFile(inputPath)
