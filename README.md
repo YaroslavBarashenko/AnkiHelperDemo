@@ -19,6 +19,24 @@ Anki Helper is a CLI tool written in Kotlin that helps simplify the creation of 
 - **JDK**: 8 or above
 - Internet connection for using the third-party translation service
 
+## Building the Project
+
+To build the executable JAR file, use the Gradle Shadow plugin:
+
+**On Windows:**
+
+```bash
+.\gradlew.bat shadowJar
+```
+
+**On Linux/macOS:**
+
+```bash
+./gradlew shadowJar
+```
+
+The executable JAR file will be created in the `build/libs/` directory with the name `anki-helper-<version>.jar`.
+
 ## Usage
 
 ### Input File
@@ -36,14 +54,29 @@ money you’ve contributed to your retirement funds. *
 
 ### Command-Line Execution
 
-Run the program from the command line by providing two arguments:
+Run the program from the command line by providing arguments:
 1. Path to the input file.
 2. Path to the output CSV file.
+3. (Optional) Output mode: `a` for append or `o` for overwrite.
 
-Example:
+**Basic usage (overwrites by default):**
 ```bash
 java -jar anki-helper.jar /path/to/input.txt /path/to/output.csv
 ```
+
+**Append mode (adds translations to existing file):**
+
+```bash
+java -jar anki-helper.jar /path/to/input.txt /path/to/output.csv a
+```
+
+**Overwrite mode (explicitly replaces file content):**
+
+```bash
+java -jar anki-helper.jar /path/to/input.txt /path/to/output.csv o
+```
+
+> **Note:** After successful translation, the input file will be automatically cleaned.
 
 ### Translation Review and Editing
 
