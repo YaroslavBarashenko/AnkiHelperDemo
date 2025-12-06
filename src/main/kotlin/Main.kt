@@ -60,12 +60,14 @@ fun main(args: Array<String>) {
             appendFile(outputPath, outputText)
             writeToConsole("Translation was successfully appended in the output file.")
             cleanFile(inputPath)
+            writeToConsole("Input file: $inputPath was cleaned.")
             return
         }
 
         writeToFile(outputPath, outputText)
         writeToConsole("Translation was successfully written in the output file.")
         cleanFile(inputPath)
+        writeToConsole("Input file: $inputPath was cleaned.")
     } catch (e: InvalidPathException) {
         println("Invalid path provided: ${e.message}")
     } catch (e: Throwable) {
