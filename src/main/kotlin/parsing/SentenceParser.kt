@@ -10,8 +10,12 @@ fun prepareLinesForTranslation(inputText: String): List<String> {
     val lines = mutableListOf<String>()
     var endIndex = input.lastIndex
     var startIndex = endIndex - 1
-    if (!input.last().isPunctuationMark()) {
-        throw IllegalInputFileException("All sentences should end with one the symbols: $marks")
+    if (input.isBlank()) {
+        throw IllegalInputFileException("Empty file can't be parsed")
+    }
+    val lastSymbol = input.last()
+    if (!lastSymbol.isPunctuationMark() && lastSymbol != '”') {
+        throw IllegalInputFileException("All sentences should end with one the symbols: $marks or ”")
     }
 
     while (startIndex >= 0) {
