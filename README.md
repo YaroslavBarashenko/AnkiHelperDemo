@@ -129,3 +129,6 @@ Users can:
 - Enter a number to modify the translation of a specific pair.
 - Confirm to save the translations to the output file.
 
+### GUI for files selection and translation editing
+
+### Opportunity to add transcription/audio with pronunciation  for selected words
